@@ -1,0 +1,54 @@
+<div class="p-5">
+    <div class="d-flex mt-4 mb-2">
+
+      <div *ngIf="!isSearchingByName" class="col-2">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon3">Page size:</span>
+          
+          <select [(ngModel)]="pageSize" (change)="updatePageSize()" class="form-select">
+            <option [ngValue]="12">12</option>
+            <option [ngValue]="24">24</option>
+            <option [ngValue]="48">48</option>
+        </select>
+        </div>
+      </div>
+
+      <div *ngIf="isSearchingByName">
+        <a (click)="goBackToAllStories()" class="card-link">&laquo; Go back</a>
+      </div>
+
+        <div class="col-3 offset-7">
+          <div class="ms-auto input-group">
+            <button type="button" class="btn btn-outline-secondary" (click)="searchByName()">Search</button>
+            <input type="search" class="form-control" placeholder="Search" aria-label="Search" [(ngModel)]="filterName">
+          </div>
+        </div>
+    </div>
+    
+    <div *ngIf="stories.length > 0" class="row">
+        <div *ngFor="let story of stories" class="card col-3 ">
+            <div class="card-body">
+                <h5 class="card-title">{{story.title}}</h5>
+                <a [href]="story.url" class="card-link">Read it!</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-center mt-4" *ngIf="!isSearchingByName">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <button class="page-link" aria-label="Previous" [disabled]="pageNumber <= 1" (click)="previousPage()">
+                  <span aria-hidden="true" >&laquo;</span>
+                </button>
+              </li>
+              <li class="page-item"><span class="page-link">{{pageNumber}}</span></li>
+              <li class="page-item">
+                <button class="page-link" aria-label="Next" (click)="nextPage()">
+                  <span aria-hidden="true">&raquo;</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+    </div>
+</div>
